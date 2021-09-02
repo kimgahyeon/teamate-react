@@ -8,4 +8,3 @@
 - [ ] About
 - [ ] Mate
 - [ ] Project
-# teamate-react
