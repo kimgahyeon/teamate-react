@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, withRouter } from "react-router-dom";
 import styled from "styled-components";
+import Modal from "./Modal";
+import LoginForm from "./LoginForm";
+import JoinContainer from "Routes/Join";
+import LoginContainer from "Routes/Login";
 
 const Header = styled.header`
   color: wthie;
@@ -22,11 +26,16 @@ const List = styled.div`
   justify-content: space-between;
 `;
 
-const MenuList = styled.ul`
+const Left = styled.ul`
   display: flex;
 `;
 
-const UserList = styled.ul`
+const Divider = styled.span`
+  margin: 0.5rem 0;
+  border-left: 2px solid white;
+`;
+
+const Right = styled.ul`
   display: flex;
   justify-content: flex-end;
 `;
@@ -37,6 +46,15 @@ const Item = styled.li`
   border-bottom: 4px solid
     ${(props) => (props.current ? "#3498db" : "transparent")}; // flatuicolors.com
   transition: border-bottom 0.5s ease-in-out;
+  cursor: pointer !important;
+`;
+
+const Title = styled.div`
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
 `;
 
 const SLink = styled(Link)`
@@ -47,28 +65,62 @@ const SLink = styled(Link)`
   color: white;
 `;
 
-export default withRouter(({ location: { pathname } }) => (
-  <Header className="nav">
-    <List>
-      <MenuList>
-        <Item current={pathname === "/"}>
-          <SLink to="/">Home</SLink>
-        </Item>
-        <Item current={pathname === "/mates"}>
-          <SLink to="/mates">Mates</SLink>
-        </Item>
-        <Item current={pathname === "/projects"}>
-          <SLink to="/projects">Projects</SLink>
-        </Item>
-      </MenuList>
-      {
-        // 세션 검사  (로그인 / 로그아웃)
-      }
-      <UserList>
-        <Item current={pathname === "/login"}>
-          <SLink to="/login">Login</SLink>
-        </Item>
-      </UserList>
-    </List>
-  </Header>
-));
+export default withRouter(({ location: { pathname } }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  const [isMate, setIsMate] = useState(true);
+
+  return (
+    <Header className="nav">
+      <List>
+        <Left>
+          <Item current={pathname === "/"}>
+            <SLink to="/">Home</SLink>
+          </Item>
+          <Divider />
+          <Item>
+            <Title>
+              {
+                // 현재 페이지명
+              }
+              현재
+            </Title>
+          </Item>
+        </Left>
+        <Right>
+          <Item current={pathname === "/mates"}>
+            <SLink to="/mates">Mates</SLink>
+          </Item>
+          <Item current={pathname === "/projects"}>
+            <SLink to="/projects">Projects</SLink>
+          </Item>
+          {
+            // 세션 검사  (로그인 / 로그아웃)
+          }
+
+          <Item>
+            <Title onClick={openModal}>Sign</Title>
+            <Modal
+              open={modalOpen}
+              close={closeModal}
+              header={isMate ? "로그인하기" : "회원가입하기"}
+            >
+              {isMate ? (
+                <LoginContainer setIsMate={setIsMate}></LoginContainer>
+              ) : (
+                <JoinContainer setIsMate={setIsMate}></JoinContainer>
+              )}
+            </Modal>
+          </Item>
+        </Right>
+      </List>
+    </Header>
+  );
+});

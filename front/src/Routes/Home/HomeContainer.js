@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import HomePresenter from "./HomePresenter";
+import reset from "styled-reset";
+import "./Home.css";
 
 const HomeContainer = () => {
   const [loading, setLoading] = useState(true);
 
-  // for test indicator
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
+    setLoading(false);
   }, []);
 
   return <HomePresenter loading={loading} />;

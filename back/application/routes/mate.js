@@ -13,9 +13,13 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", (req, res) => {
-  console.log(req.session);
-  res.json(req.session);
+router.get("/", async (req, res) => {
+  try {
+    const result = await Mate.getAllMates()
+    res.status(200).send({ ok: true, mates: result })
+  } catch (err) {
+    res.status(500).send();
+  }
 });
 
 module.exports = router;
