@@ -21,9 +21,12 @@ const globalStyles = createGlobalStyle`
   body {
     font-family: 'NanumSquare', sans-serif;
     font-size: 12px;
-    background-color: white;
+    background-color: #fafafa;
     color: black;
     padding-top: 50px;
+    width: 100%;
+    overflow: auto !important;
+    position: unset !important;
   }
 
 

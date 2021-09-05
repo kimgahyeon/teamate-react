@@ -10,6 +10,7 @@ const api = axios.create({
 
 export const mateAPI = {
   getAllMates: () => api.get("mate"),
+  getMates: (limit) => api.get(`mate/limit/${limit}`),
   getMateByID: (id) => api.get(`mate/${id}`),
   getMateByEmail: (email) => api.get(`mate/email/${email}`),
   updateMate: (id, mate) => api.put(`mate/${id}`, { mate }),
@@ -24,6 +25,7 @@ export const projectAPI = {
   setProject: (project) => api.post("project", { project }),
   getAllProjects: () => api.get("project/"),
   getProjectsByStatus: (status) => api.get(`project/status/${status}`),
+  getProjectsByStatusAndLimit: (status, limit) => api.get(`project/status/${status}/limit/${limit}`),
   getProjectByID: (id) => api.get(`project/${id}`),
   updateProject: (id, project) => api.put(`project/${id}`, { project }),
   deleteProject: (id) => api.delete(`project/${id}`),
