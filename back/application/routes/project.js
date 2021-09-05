@@ -1,36 +1,68 @@
-const express = require("express");
-const router = express.Router;
+const express = require('express');
+const app = express();
+var router = express.Router();
+var Project = require('../model/project')
+var ObjectId = require('mongodb').ObjectID;
 
-router.post("/project", async (req, res) => {
-  const name = req.body.name;
-  const project = req.body.project;
-  const score = req.body.score;
-
-  const walletPath = path.join(process.cwd(), "wallet");
-  const wallet = new FileSystemWallet(walletPath);
-  console.log(`Wallet path: ${walletPath}`);
-
-  const userExists = await wallet.exists("user1");
-  if (!userExists) {
-    console.log(
-      'An identity for the user "user1" does not exist in the wallet'
-    );
-    console.log("Run the registerUser.js application before retrying");
-    return;
-  }
-  const gateway = new Gateway();
-  await gateway.connect(ccp, {
-    wallet,
-    identity: "user1",
-    discovery: { enabled: false },
-  });
-  const network = await gateway.getNetwork("mychannel");
-  const contract = network.getContract("teamate");
-  await contract.submitTransaction("addRating", name, project, score);
-  console.log("Addrating works well! Transaction has been submitted");
-  await gateway.disconnect();
-
-  res.status(200).send("Addrating works well! Transaction has been submitted");
+// index
+router.get('/', function (req, res) {
+    Project.find({}, function(err, project){
+        if(req.user == undefined){
+            res.render('project',{ title: 'Project',  project: project, logged: false })
+        }else{
+            res.render('project',{ title: 'Project', project: project, logged: true })
+        }
+    })
 });
 
-module.export = router;
+// new
+router.get('/new', function(req, res){
+    res.render('new', { title: 'new',  logged: true })
+})
+
+// show 
+router.get('/:id', (req, res) => {
+    Project.findOne({"_id": ObjectId(req.params.id)}, (err, project) => {
+      if(err) return res.json(err);
+      res.render('read', { project: project, logged: true });
+    });
+  });
+  
+// create
+router.post('/', function(req,res){
+    console.log("post")
+    var newProject = new Project({
+        title: req.body.title,
+        detail: req.body.detail,
+        content: req.body.content
+    })
+
+    newProject.save(function(err, data){
+        if(err) console.log("저장 실패");
+        else{
+            console.log(data);
+        }
+    })
+    res.redirect('project')
+})
+
+
+// update
+router.post('/:id', (req, res) => {
+    const updated = Project.findOne({"_id": ObjectId(req.params.id)})
+    updated.update(
+    { $set: { "title": req.body.title, "detail": req.body.detail, "content": req.body.content} }, 
+    (err, project) => {
+        if(err) return res.json(err);
+        console.log('update failed');
+        console.log(err);
+        res.redirect('/');
+    });
+});
+
+// destroy
+router.delete('/:id', (req, res)=>{
+    
+})
+
+module.exports = router;

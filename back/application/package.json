@@ -15,10 +15,17 @@
     "author": "Hyperledger",
     "license": "Apache-2.0",
     "dependencies": {
+        "bcrypt-nodejs": "0.0.3",
         "body-parser": "1.19.0",
+        "connect-flash": "^0.1.1",
+        "cors": "^2.8.5",
         "express": "4.17.1",
+        "express-session": "^1.17.2",
         "fabric-ca-client": "~1.4.0",
         "fabric-network": "~1.4.0",
-        "nodemon": "^2.0.12"
+        "mongoose": "^6.0.4",
+        "nodemon": "^2.0.12",
+        "passport": "^0.4.1",
+        "passport-local-mongoose": "^6.1.0"
     }
 }

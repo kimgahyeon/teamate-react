@@ -1,25 +1,50 @@
 // 모듈추가
 const express = require("express");
 const app = express();
-var bodyParser = require("body-parser");
-// 하이퍼레저 모듈추가+연결속성파일로드
-const { FileSystemWallet, Gateway } = require("fabric-network");
-const fs = require("fs");
 const path = require("path");
-const ccpPath = path.resolve(__dirname, "..", "network", "connection.json");
-const ccpJSON = fs.readFileSync(ccpPath, "utf8");
-const ccp = JSON.parse(ccpJSON);
+
 // 서버속성
 const PORT = 8080;
 const HOST = "0.0.0.0";
+
+const cors = require("cors");
+const corsOption = {
+  origin: ["http://dmc.ajou.ac.kr:3000", "http://localhost:3000"],
+  credentials: true,
+};
+
+app.use(express.json());
+
+// cors
+app.use(cors(corsOption));
+
 // app.use
 app.use(express.static(path.join(__dirname, "views")));
 
+// passport
+const passport = require("passport");
+const passportConfig = require("./modules/passport");
+const session = require("express-session");
+
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// DB Connection
+require("./model");
+
+passportConfig();
+
 // 라우팅
-const userRouter = require("./routes/user");
-const projectRouter = require("./routes/project");
-app.use("/user", userRouter);
-app.use("/project", projectRouter);
+const router = require("./routes");
+app.use(router);
 
 // 서버시작
 app.listen(PORT, HOST);
