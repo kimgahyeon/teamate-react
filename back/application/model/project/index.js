@@ -18,7 +18,7 @@ class ProjectModel {
   getAllProjects = () => {
     return new Promise(async (resolve, reject) => {
       try {
-        const result = await Project.find().sort("-createdAt");
+        const result = await Project.find().sort("-createdAt").populate("leader").populate("mates");
         resolve(result);
       } catch (err) {
         reject(err);
@@ -30,19 +30,30 @@ class ProjectModel {
   getProjectsByStatus = (status) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const result = await Project.find({ status }).sort("-createAt");
+        const result = await Project.find({ status }).sort("-createdAt").populate("leader").populate("mates");
         resolve(result);
       } catch (err) {
         reject(err);
       }
     });
   };
+  
+  getProjectsByStatusAndLimit = (status, limit) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const result = await Project.find({ status }).sort("-createdAt").populate("leader").populate("mates").limit(limit);
+        resolve(result);
+      } catch(err) {
+        reject(err);
+      }
+    });
+  }
 
   // R-0304
   getProjectByID = (_id) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const result = await Project.find({ _id }).sort("-createAt");
+        const result = await Project.find({ _id }).sort("-createdAt").populate("leader").populate("mates");
         resolve(result);
       } catch (err) {
         reject(err);

@@ -22,4 +22,27 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/limit/:limit", async (req, res) => {
+  try {
+    const result = await Mate.getAllMates();
+    let mates = [];
+    while (mates.length < Number(req.params.limit)) {
+      mates.push(mates[Math.floor(Math.random() * result.length)]);
+    }
+    res.status(200).send({ ok: true, mates })
+  } catch (err) {
+    res.status(500).send();
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  try {
+    const mate = await Mate.getMateByID(id);
+    delete mate.password;
+    res.status(200).send({ ok: true, mate })
+  } catch (err) {
+    res.status(500).send();
+  }
+})
+
 module.exports = router;

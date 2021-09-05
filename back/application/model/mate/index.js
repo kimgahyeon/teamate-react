@@ -56,18 +56,6 @@ class MateModel {
     });
   };
 
-  // test
-  getMateByEmail = (email) => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const result = await Mate.findOne({ email });
-        resolve(result);
-      } catch (err) {
-        reject(err);
-      }
-    });
-  };
-
   // R-0205
   updateMate = (mate) => {
     return new Promise(async (resolve, reject) => {

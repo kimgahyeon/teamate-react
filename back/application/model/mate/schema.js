@@ -5,7 +5,10 @@ const bcrypt = require("bcrypt-nodejs"); // 비밀번호 암호화를 위한 모
 const mateSchema = new mongoose.Schema({
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
-  name: { type: String },
+  name: { type: String, required: true },
+  profile: String,  // 사진
+  role: String,
+  introduce: String,
   tags: [{ type: String }],
   projects: [{ type: mongoose.Schema.Types.ObjectId, ref: "Project" }],
   rates: [{ type: Number }],

@@ -2,6 +2,8 @@ require("../model")
 
 const Mate = require("../model/mate");
 
+const roles = ["개발자", "기획자", "디자이너", "퍼블리셔", "PM", "DevOps"];
+
 const getRandomName = () => {
   let str = "";
   for (let i = 0; i < 3; i++) {
@@ -17,7 +19,9 @@ const generateMate = async (reps) => {
     const mate = {
       email: `${randomName}@gmail.com`,
       name: randomName,
-      password: "1234"
+      password: "1234",
+      role: roles[Math.floor(Math.random() * roles.length)],
+      tags: ["tag1", "tag2", "tag3"]
     }
 
     const result = await Mate.setMate(mate);

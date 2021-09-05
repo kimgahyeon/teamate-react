@@ -46,7 +46,7 @@ const generateProject = async (from, to) => {
     const project = {
       title: `title${i}`,
       content: `content${i}`,
-      requirement: await getRequirements(),
+      requirements: await getRequirements(),
       leader: await getRandomMate(),
       mates: await getRandomMates(),
       status: Math.floor(Math.random() * 2)
