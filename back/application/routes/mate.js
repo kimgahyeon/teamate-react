@@ -27,7 +27,7 @@ router.get("/limit/:limit", async (req, res) => {
     const result = await Mate.getAllMates();
     let mates = [];
     while (mates.length < Number(req.params.limit)) {
-      mates.push(mates[Math.floor(Math.random() * result.length)]);
+      mates.push(result[Math.floor(Math.random() * result.length)]);
     }
     res.status(200).send({ ok: true, mates })
   } catch (err) {
