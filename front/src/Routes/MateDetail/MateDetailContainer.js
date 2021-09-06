@@ -17,7 +17,7 @@ const MateDetailContainer = ({ id }) => {
     } finally {
       setLoading(false);
     }
-  });
+  }, []);
 
   return <MateDetailPresenter loading={loading} error={error} {...mate} />;
 };

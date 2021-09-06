@@ -23,7 +23,7 @@ const Section = styled.div`
 
 const SectionTitle = styled.div`
   text-align: left;
-  margin: 30px 20px 80px;
+  margin: 30px 20px 50px;
   font-size: 17px;
   font-weight: 700;
 `
@@ -195,8 +195,10 @@ const HomePresenter = ({ loading, projects, mates }) => {
         <SectionTitle>
           이번 주 메이트 추천
           {/* TODO: 최신 메이트 6명 보여주기 */}
-          {mates && mates.length > 0 && mates.map((mate) => (<MateCard {...mate} />))}
         </SectionTitle>
+        <Container>
+          {mates && mates.length > 0 && mates.map((mate) => (<MateCard {...mate} />))}
+        </Container>
       </Section>
 
       {/* </Container> */}

@@ -26,7 +26,7 @@ const router = () => {
           <Route path="/mate" exact component={Mate}></Route>
           <Route path="/mate/:id" component={MateDetail}></Route>
 
-          <Route path="/project" component={Project}></Route>
+          <Route path="/project" exact component={Project}></Route>
           <Route path="/project/:id" component={ProjectDetail}></Route>
           <Route path="/login" component={Login}></Route>
           <Redirect from="*" to="/"></Redirect>

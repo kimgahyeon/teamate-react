@@ -25,7 +25,7 @@ const MateRole = styled.div`
 `
 
 const MateImage = styled.div`
-  background
+  // background
   border-radius: 20px;
   overflow: hidden;
   width: 33px;
@@ -75,6 +75,8 @@ const BookmarkIcon = styled.div`
 `
 
 const MateCardComponent = ({ _id, role, name, tags }) => {
+
+  console.log(_id);
 
   return (
     <Link to={`/mate/${_id}`}>

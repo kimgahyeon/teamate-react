@@ -14,6 +14,34 @@ const Container = styled.div`
   left: 50%;
 `;
 
+const Button = styled.button`
+  display: block;
+  background-color: #565656;
+  color: #ffffff;
+  height: 58px;
+  border-radius: 4px; 
+  margin-top: 7px;
+  font-size: 15px;
+  line-height: 58px;
+  width: 100%;  
+  outline: none;
+  cursor: pointer;
+  border: 0;
+
+  &:hover {
+      background-color: #218c74;
+      transition-duration: 0.3s
+    }
+`;
+
+const Error = styled.div`
+  margin-top: 8px;
+  margin-bottom: 40px;
+  font-size: 14px;
+  color: #E83442;
+`;
+
+
 const JoinPresenter = ({
   loading,
   error,
@@ -73,10 +101,10 @@ const JoinPresenter = ({
       </div>
       <br />
       <br />
-      <button className="submitButton" type="submit">
+      <Button type="submit">
         {" "}
         회원가입하기{" "}
-      </button>
+      </Button>
     </form>
   </>
 );

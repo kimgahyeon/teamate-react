@@ -17,7 +17,7 @@ const ProjectDetailContainer = ({ id }) => {
     } finally {
       setLoading(false);
     }
-  });
+  }, []);
 
   return <ProjectDetailPresenter loading={loading} error={error} {...project} />;
 };

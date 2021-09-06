@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-
+import imgurl from "assets/picture1.jpg";
+  
 const ProjectCard = styled.div`
   position: relative;
   width: 410px;
@@ -25,7 +26,7 @@ const ProjectCardImg = styled.div`
     width: 100%;
     height: 120px;
     overflow: hidden;
-    // background-image: url(/img/card_sample.png);
+    background-image: url( ${imgurl} );
     background-size: cover;
     background-position: center center;
     transition-duration: 0.5s;
