@@ -11,7 +11,9 @@ const MateContainer = () => {
   useEffect(async () => {
     try {
       setLoading(true);
-      const { data: { mates } } = await mateAPI.getAllMates();
+      const {
+        data: { mates },
+      } = await mateAPI.getAllMates();
       setMates(mates);
     } catch {
       setError("Mate를 찾을 수 없습니다.");

@@ -10,6 +10,10 @@ const Container = styled.div`
   :not(:last-child) {
     margin-bottom: 48px;
   }
+  display: grid;
+  // 화면 크기에 맞춰서 컬럼수 자동으로 채워줌
+  grid-template-columns: repeat(auto-fit, minmax(410px, auto));
+	justify-items: center; 
   text-align: center;
 `;
 
@@ -112,6 +116,10 @@ const HomePresenter = ({ loading, projects, mates }) => {
     vertical: true,
     verticalSwiping: true,
     swipeToSlide: true,
+    autoplay : true,			// 자동 스크롤 사용 여부
+    autoplaySpeed : 10000, 		// 자동 스크롤 시 다음으로 넘어가는데 걸리는 시간 (ms)
+    pauseOnHover: true, // 마우스 올렸을 때 autoplay 멈춤
+    dotsClass: "slick-dots",
     beforeChange: function (currentSlide, nextSlide) {
       console.log("before change", currentSlide, nextSlide);
     },
@@ -121,7 +129,7 @@ const HomePresenter = ({ loading, projects, mates }) => {
   }
 
   const images = [
-    "picture1.jpg", "picture2.jpg", "picture3.jpg"
+    "picture1.jpg", "picture2.jpg","picture3.jpg"
   ];
 
   return (
@@ -132,7 +140,7 @@ const HomePresenter = ({ loading, projects, mates }) => {
       <Slider {...settings}>
         {images.map((image, index) => {
           const src = require(`assets/${image}`).default;
-          return (<div style="height: calc(100vh - 48px);" key={index}>
+          return (<div style="height: calc(100vh - 56px);" key={index}>
             <ImageContainer>
               <Image src={src} />
             </ImageContainer>
@@ -185,7 +193,6 @@ const HomePresenter = ({ loading, projects, mates }) => {
           기대되는 새로운 프로젝트
         </SectionTitle>
         <Container>
-          {/* TODO: 최신 프로젝트 6개 보여주기 */}
           {projects && projects.length > 0 && projects.map((project) => (<ProjectCard {...project} />))}
 
         </Container>
@@ -194,7 +201,6 @@ const HomePresenter = ({ loading, projects, mates }) => {
       <Section>
         <SectionTitle>
           이번 주 메이트 추천
-          {/* TODO: 최신 메이트 6명 보여주기 */}
         </SectionTitle>
         <Container>
           {mates && mates.length > 0 && mates.map((mate) => (<MateCard {...mate} />))}

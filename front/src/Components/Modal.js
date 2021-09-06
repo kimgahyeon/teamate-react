@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 
-const Modal = styled.div`
+const ModalContainer = styled.div`
   display: ${(props) => (props.open ? "flex" : "none")};
   align-items: center;
   position: fixed;
@@ -11,25 +11,46 @@ const Modal = styled.div`
   left: 0;
   z-index: 99;
   background-color: rgba(0, 0, 0, 0.6);
-  animation: modal-bg-show .3s;
+  animation: modal-bg-show 0.3s;
+  ${(props) => (props.open ? "animation-direction: reverse" : "")}
+
+  @keyframes modal-bg-show {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 `;
 
-const Section = styled.section`
+const Modal = styled.section`
   width: 90%;
   height: fit-content;
   max-width: 450px;
-  margin:0 auto;
-  border-radius: .3rem;
+  margin: 0 auto;
+  border-radius: 0.3rem;
   background-color: #fff;
   /* 팝업이 열릴때 스르륵 열리는 효과 */
-  animation: modal-show .3s;
+  animation: modal-show 0.3s;
   overflow: hidden;
+
+  @keyframes modal-show {
+    from {
+      opacity: 0;
+      margin-top: -50px;
+    }
+    to {
+      opacity: 1;
+      margin-top: 0;
+    }
+  }
 `;
 
 const Header = styled.header`
   position: relative;
   margin-top: 60px;
-  color:#3c3c3c;
+  color: #3c3c3c;
   font-weight: 900;
   font-size: 18px;
   text-align: center;
@@ -57,11 +78,9 @@ const Main = styled.main`
 
 const ModalComponent = (props) => {
   // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
-  const { open, close, header } = props;
+  const { modalOpen, setModalOpen, header } = props;
 
-  const modalCloseHandler = (e) => {
-
-  }
+  const modalCloseHandler = (e) => {};
   // 모달이 떠있을때 뒷 영역의 스크롤이 내려가지 않게 막는 코드
   useEffect(() => {
     document.body.style.cssText = `position: fixed; top: -${window.scrollY}px`;
@@ -74,20 +93,24 @@ const ModalComponent = (props) => {
 
   return (
     // 모달이 열릴때 openModal 클래스가 생성된다.
-    <Modal open={open}>
-      {open ? (
-        <Section>
+    <ModalContainer open={modalOpen}>
+      {modalOpen ? (
+        <Modal>
           <Header>
-            <CloseButton onClick={close}>
+            <CloseButton
+              onClick={() => {
+                setModalOpen(false);
+              }}
+            >
               {" "}
               &times;{" "}
             </CloseButton>
             {header}
           </Header>
           <Main>{props.children}</Main>
-        </Section>
+        </Modal>
       ) : null}
-    </Modal>
+    </ModalContainer>
   );
 };
 

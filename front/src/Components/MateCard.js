@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
@@ -22,7 +22,7 @@ const MateRole = styled.div`
   color: #979797;
   font-size: 14px;
   cursor: pointer;
-`
+`;
 
 const MateImage = styled.div`
   // background
@@ -33,7 +33,7 @@ const MateImage = styled.div`
   display: inline-block;
   vertical-align: middle;
   cursor: pointer;
-`
+`;
 
 const MateName = styled.div`
   margin-left: 8px;
@@ -41,7 +41,7 @@ const MateName = styled.div`
   font-weight: 700;
   color: #3c3c3c;
   cursor: pointer;
-`
+`;
 
 const MateTags = styled.div`
   font-size: 16px;
@@ -51,7 +51,7 @@ const MateTags = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   margin-top: 30px;
-`
+`;
 
 const BottomSection = styled.div`
   position: absolute;
@@ -60,37 +60,43 @@ const BottomSection = styled.div`
   left: 0px;
   bottom: 23px;
   color: #707070;
-`
+`;
 const LastEdited = styled.div`
   position: absolute;
   top: 3px;
   left: 30px;
-`
+`;
 
 const BookmarkIcon = styled.div`
   position: absolute;
   right: 28px;
   top: 6px;
   cursor: pointer;
-`
+`;
 
 const MateCardComponent = ({ _id, role, name, tags }) => {
-
-  console.log(_id);
+  const [id, setId] = useState(_id);
+  console.log(`In mate card component: ${_id}`);
 
   return (
-    <Link to={`/mate/${_id}`}>
+    <Link to={`/mate/${id}`}>
       <MateCard>
         <MateImage> </MateImage>
         <MateRole> {role} </MateRole>
         <MateName> {name} </MateName>
-        <MateTags>{tags && tags.length > 0 && tags.map((tag) => `#${tag} `)}</MateTags>
+        <MateTags>
+          {tags && tags.length > 0 && tags.map((tag) => `#${tag} `)}
+        </MateTags>
         <BottomSection>
           <LastEdited>3분 전 업데이트</LastEdited>
-          <BookmarkIcon> <i class="far fa-bookmark"></i> </BookmarkIcon>
+          <BookmarkIcon>
+            {" "}
+            <i class="far fa-bookmark"></i>{" "}
+          </BookmarkIcon>
         </BottomSection>
       </MateCard>
-    </Link>)
-}
+    </Link>
+  );
+};
 
 export default MateCardComponent;

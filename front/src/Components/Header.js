@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Modal from "./Modal";
 import JoinContainer from "Routes/Join";
 import LoginContainer from "Routes/Login";
+import DropdownMenu from "Components/DropdownMenu"
 
 const Header = styled.header`
   color: white;
@@ -11,7 +12,7 @@ const Header = styled.header`
   top: 0;
   left: 0;
   width: 100%;
-  height: 48px;
+  height: 56px;
   display: flex;
   align-items: center;
   padding: 0px 10px;
@@ -21,11 +22,11 @@ const Header = styled.header`
 `;
 
 const Home = styled.div`
-  color: #2AC1BC;
+  color: #2ac1bc;
   font-weight: 700;
   font-size: 18px;
   margin-left: 20px;
-`
+`;
 
 const List = styled.div`
   width: 100%;
@@ -46,7 +47,7 @@ const CurrentPage = styled.span`
   line-height: 20px;
   margin-top: 3px;
   color: #b1b1b1;
-`
+`;
 
 const Right = styled.ul`
   display: flex;
@@ -59,7 +60,8 @@ const Item = styled.li`
   color: #3c3c3c;
   text-align: center;
   border-bottom: 4px solid
-  // ${(props) => (props.current ? "#3498db" : "transparent")}; // flatuicolors.com
+  // ${(props) =>
+    props.current ? "#3498db" : "transparent"}; // flatuicolors.com
   transition: border-bottom 0.5s ease-in-out;
   cursor: pointer !important;
 `;
@@ -82,7 +84,7 @@ const Sign = styled.span`
   border-left: 1px solid #ddd;
   line-heigh: 20px;
   margin-left: 20px;
-`
+`;
 
 const SLink = styled(Link)`
   height: 48px;
@@ -92,23 +94,16 @@ const SLink = styled(Link)`
   color: #3c3c3c;
 `;
 
-// 가현: 페이지가 바뀔 때마다 Header에 현재 페이지를 보여주기 위한 객체 
+// 가현: 페이지가 바뀔 때마다 Header에 현재 페이지를 보여주기 위한 객체
 var tabs = {
   "/": <p>홈</p>,
   "/mate": <p>메이트</p>,
   "/mate/test": <p>메이트 상세보기</p>,
-  "/project": <p>프로젝트</p>
-}
+  "/project": <p>프로젝트</p>,
+};
 
 export default withRouter(({ location: { pathname } }) => {
   const [modalOpen, setModalOpen] = useState(false);
-  const openModal = () => {
-    setModalOpen(true);
-  };
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
   const [isMate, setIsMate] = useState(true);
 
   return (
@@ -116,7 +111,9 @@ export default withRouter(({ location: { pathname } }) => {
       <List>
         <Left>
           <Item current={pathname === "/"}>
-            <SLink to="/"><Home> Teamate </Home> </SLink>
+            <SLink to="/">
+              <Home> Teamate </Home>{" "}
+            </SLink>
           </Item>
           <Item>
             <Title>
@@ -131,6 +128,7 @@ export default withRouter(({ location: { pathname } }) => {
           </Item>
         </Left>
         <Right>
+          
           <Item current={pathname === "/mate"}>
             <SLink to="/mate">Mates</SLink>
           </Item>
@@ -140,23 +138,38 @@ export default withRouter(({ location: { pathname } }) => {
           {
             // 세션 검사  (로그인 / 로그아웃)
           }
-
+          <Item current={pathname === "/"}>
+            <DropdownMenu></DropdownMenu>
+          </Item>
           <Item>
             <Title>
-              <Sign onClick={openModal}>Sign</Sign>
+              <Sign
+                onClick={() => {
+                  setModalOpen(true);
+                }}
+              >
+                Sign
+              </Sign>
             </Title>
             <Modal
-              open={modalOpen}
-              close={closeModal}
+              modalOpen={modalOpen}
+              setModalOpen={setModalOpen}
               header={isMate ? "로그인하기" : "회원가입하기"}
             >
               {isMate ? (
-                <LoginContainer setModalOpen={setModalOpen} setIsMate={setIsMate}></LoginContainer>
+                <LoginContainer
+                  setModalOpen={setModalOpen}
+                  setIsMate={setIsMate}
+                ></LoginContainer>
               ) : (
-                <JoinContainer setModalOpen={setModalOpen} setIsMate={setIsMate}></JoinContainer>
+                <JoinContainer
+                  setModalOpen={setModalOpen}
+                  setIsMate={setIsMate}
+                ></JoinContainer>
               )}
             </Modal>
           </Item>
+          
         </Right>
       </List>
     </Header>
