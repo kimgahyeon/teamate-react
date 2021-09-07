@@ -1,3 +1,4 @@
+const project = require("../project");
 const Mate = require("./schema");
 
 class MateModel {
@@ -37,6 +38,28 @@ class MateModel {
     return new Promise(async (resolve, reject) => {
       try {
         const result = await Mate.find();
+        resolve(result);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  };
+
+  getMatesByRange = (offset, limit) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const result = await Mate.find().sort("_id").skip(offset).limit(limit);
+        resolve(result);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  };
+
+  getMatesByRoleAndRange = (role, offset, limit) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const result = await Mate.find({ role }).sort("_id").skip(offset).limit(limit);
         resolve(result);
       } catch (err) {
         reject(err);
