@@ -8,7 +8,7 @@ const ROW_COUNT = 6;
 
 const HomeContainer = () => {
   const [loading, setLoading] = useState(true);
-  const [status, setStatus] = useState(0)
+  const [status, setStatus] = useState(0);
   const [error, setError] = useState("");
   const [projects, setProjects] = useState([]);
   const [mates, setMates] = useState([]);
@@ -16,8 +16,12 @@ const HomeContainer = () => {
   useEffect(async () => {
     try {
       setLoading(true);
-      const { data: { projects } } = await projectAPI.getProjectsByStatusAndLimit(status, ROW_COUNT);
-      const { data: { mates } } = await mateAPI.getMates(ROW_COUNT);
+      const {
+        data: { projects },
+      } = await projectAPI.getProjectsByStatusAndRange(status, ROW_COUNT);
+      const {
+        data: { mates },
+      } = await mateAPI.getMates(ROW_COUNT);
       setProjects(projects);
       setMates(mates);
     } catch {

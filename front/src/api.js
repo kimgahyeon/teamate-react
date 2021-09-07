@@ -17,15 +17,15 @@ export const mateAPI = {
   deleteMate: (id) => api.delete(`mate/${id}`),
 
   login: ({ email, password }) => api.post("login", { email, password }),
-  join: ({ email, password, name }) =>
-    api.post(`mate`, { email, password, name }),
+  join: ({ email, password, name }) => api.post(`mate`, { email, password, name }),
 };
 
 export const projectAPI = {
   setProject: (project) => api.post("project", { project }),
   getAllProjects: () => api.get("project/"),
   getProjectsByStatus: (status) => api.get(`project/status/${status}`),
-  getProjectsByStatusAndLimit: (status, limit) => api.get(`project/status/${status}/limit/${limit}`),
+  getProjectsByStatusAndRange: (status, offset, limit) =>
+    api.get(`project/status/${status}/offset/${offset}/limit/${limit}`),
   getProjectByID: (id) => api.get(`project/${id}`),
   updateProject: (id, project) => api.put(`project/${id}`, { project }),
   deleteProject: (id) => api.delete(`project/${id}`),

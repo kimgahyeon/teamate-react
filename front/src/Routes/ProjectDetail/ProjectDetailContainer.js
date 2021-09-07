@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import ProjectDetailPresenter from "./ProjectDetailPresenter";
 import { projectAPI } from "api";
 
-const ProjectDetailContainer = ({ id }) => {
+const ProjectDetailContainer = ({
+  match: {
+    params: { id },
+  },
+}) => {
   const [loading, setLoading] = useState(true);
   const [project, setProject] = useState(null);
   const [error, setError] = useState("");
@@ -10,10 +14,13 @@ const ProjectDetailContainer = ({ id }) => {
   useEffect(async () => {
     try {
       setLoading(true);
-      const { data: { project } } = await projectAPI.getProjectByID(id);
+      const {
+        data: { project },
+      } = await projectAPI.getProjectByID(id);
       setProject(project);
+      console.log(project);
     } catch {
-      setError("Project를 찾을 수 없습니다.")
+      setError("Project를 찾을 수 없습니다.");
     } finally {
       setLoading(false);
     }
