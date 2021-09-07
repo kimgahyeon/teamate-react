@@ -10,6 +10,7 @@ const projectSchema = new Schema({
       content: String,
     },
   ],
+  tags: [String],
   leader: { type: Schema.Types.ObjectId, ref: "Mate" },
   mates: [{ type: Schema.Types.ObjectId, ref: "Mate" }],
   // 0: 모집 중, 1: 진행 중, 2: 완료

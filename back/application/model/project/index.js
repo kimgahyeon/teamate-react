@@ -6,8 +6,8 @@ class ProjectModel {
     return new Promise(async (resolve, reject) => {
       try {
         const newProject = new Project(project);
-        await newProject.save();
-        resolve(newProject);
+        const result = await newProject.save();
+        resolve(result);
       } catch (err) {
         reject(err);
       }
@@ -37,23 +37,29 @@ class ProjectModel {
       }
     });
   };
-  
-  getProjectsByStatusAndLimit = (status, limit) => {
+
+  getProjectsByStatusAndRange = (status, offset, limit) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const result = await Project.find({ status }).sort("-createdAt").populate("leader").populate("mates").limit(limit);
+        const result = await Project.find({ status })
+          .sort("_id")
+          .sort("-createdAt")
+          .populate("leader")
+          .populate("mates")
+          .skip(offset)
+          .limit(limit);
         resolve(result);
-      } catch(err) {
+      } catch (err) {
         reject(err);
       }
     });
-  }
+  };
 
   // R-0304
   getProjectByID = (_id) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const result = await Project.find({ _id }).sort("-createdAt").populate("leader").populate("mates");
+        const result = await Project.findOne({ _id }).sort("-createdAt").populate("leader").populate("mates");
         resolve(result);
       } catch (err) {
         reject(err);
@@ -65,10 +71,7 @@ class ProjectModel {
   updateProject = (project) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const result = await Project.updateOne(
-          { id: project._id },
-          { $set: project }
-        );
+        const result = await Project.updateOne({ _id: project._id }, { $set: project });
         resolve(result);
       } catch (err) {
         reject(err);
@@ -80,10 +83,7 @@ class ProjectModel {
   launchProject = (_id) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const result = await Project.updateOne(
-          { _id },
-          { $set: { status: 1 } }
-        );
+        const result = await Project.updateOne({ _id }, { $set: { status: 1 } });
         resolve(result);
       } catch (err) {
         reject(err);
@@ -95,10 +95,7 @@ class ProjectModel {
   terminateProject = (_id) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const result = await Project.updateOne(
-          { _id },
-          { $set: { status: 2, terminatedAt: Date.now() } }
-        );
+        const result = await Project.updateOne({ _id }, { $set: { status: 2, terminatedAt: Date.now() } });
         resolve(result);
       } catch (err) {
         reject(err);

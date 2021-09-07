@@ -10,8 +10,8 @@ class MateModel {
         const newMate = new Mate(mate);
         newMate.password = newMate.generateHash(mate.password);
 
-        await newMate.save();
-        resolve("Mate 등록이 완료되었습니다.");
+        const result = await newMate.save();
+        resolve(result);
       } catch (err) {
         reject(err);
       }
@@ -48,7 +48,7 @@ class MateModel {
   getMateByID = (_id) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const result = await Mate.findById(_id);
+        const result = await Mate.findById(_id).populate("projects");
         resolve(result);
       } catch (err) {
         reject(err);

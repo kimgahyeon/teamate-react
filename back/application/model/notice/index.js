@@ -6,8 +6,8 @@ class NoticeModel {
     return new Promise(async (resolve, reject) => {
       try {
         const newNotice = new Notice(notice);
-        await newNotice.save();
-        resolve(newNotice);
+        const result = await newNotice.save();
+        resolve(result);
       } catch (err) {
         reject(err);
       }

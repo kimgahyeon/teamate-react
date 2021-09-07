@@ -15,8 +15,8 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const result = await Mate.getAllMates()
-    res.status(200).send({ ok: true, mates: result })
+    const result = await Mate.getAllMates();
+    res.status(200).send({ ok: true, mates: result });
   } catch (err) {
     res.status(500).send();
   }
@@ -29,7 +29,7 @@ router.get("/limit/:limit", async (req, res) => {
     while (mates.length < Number(req.params.limit)) {
       mates.push(result[Math.floor(Math.random() * result.length)]);
     }
-    res.status(200).send({ ok: true, mates })
+    res.status(200).send({ ok: true, mates });
   } catch (err) {
     res.status(500).send();
   }
@@ -37,12 +37,13 @@ router.get("/limit/:limit", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const mate = await Mate.getMateByID(id);
+    const mate = await Mate.getMateByID(req.params.id);
     delete mate.password;
-    res.status(200).send({ ok: true, mate })
+    console.log(mate);
+    res.status(200).send({ ok: true, mate });
   } catch (err) {
     res.status(500).send();
   }
-})
+});
 
 module.exports = router;

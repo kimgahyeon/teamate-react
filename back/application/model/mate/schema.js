@@ -6,7 +6,7 @@ const mateSchema = new mongoose.Schema({
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
   name: { type: String, required: true },
-  profile: String,  // 사진
+  profile: String, // 사진
   role: String,
   introduce: String,
   tags: [{ type: String }],

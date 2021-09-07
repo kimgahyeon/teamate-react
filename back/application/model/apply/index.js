@@ -6,8 +6,8 @@ class ApplyModel {
     return new Promise(async (resolve, reject) => {
       try {
         const newApply = new Apply(apply);
-        await newApply.save();
-        resolve(newApply);
+        const result = await newApply.save();
+        resolve(result);
       } catch (err) {
         reject(err);
       }
@@ -18,10 +18,7 @@ class ApplyModel {
   updateApply = (apply) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const result = await Apply.updateOne(
-          { _id: apply._id },
-          { $set: apply }
-        );
+        const result = await Apply.updateOne({ _id: apply._id }, { $set: apply });
         resolve(result);
       } catch (err) {
         reject(err);
