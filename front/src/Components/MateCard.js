@@ -75,18 +75,13 @@ const BookmarkIcon = styled.div`
 `;
 
 const MateCardComponent = ({ _id, role, name, tags }) => {
-  const [id, setId] = useState(_id);
-  console.log(`In mate card component: ${_id}`);
-
   return (
-    <Link to={`/mate/${id}`}>
+    <Link to={`/mate/${_id}`}>
       <MateCard>
         <MateImage> </MateImage>
         <MateRole> {role} </MateRole>
         <MateName> {name} </MateName>
-        <MateTags>
-          {tags && tags.length > 0 && tags.map((tag) => `#${tag} `)}
-        </MateTags>
+        <MateTags>{tags && tags.length > 0 && tags.map((tag) => `#${tag} `)}</MateTags>
         <BottomSection>
           <LastEdited>3분 전 업데이트</LastEdited>
           <BookmarkIcon>

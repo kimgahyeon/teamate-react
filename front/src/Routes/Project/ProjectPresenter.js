@@ -11,9 +11,8 @@ const Container = styled.div`
   display: grid;
   // 화면 크기에 맞춰서 컬럼수 자동으로 채워줌
   grid-template-columns: repeat(auto-fit, minmax(410px, auto));
-	justify-items: center; 
+  justify-items: center;
   text-align: center;
-  
 `;
 
 const ProjectPresenter = ({ setStatus, loading, error, projects }) => (
@@ -22,10 +21,13 @@ const ProjectPresenter = ({ setStatus, loading, error, projects }) => (
       <title>Mates | Teamate</title>
     </Helmet>
 
-    {loading ? (<ProgressIndicator />) : (
+    {loading ? (
+      <ProgressIndicator />
+    ) : (
       <Container>
-        {projects && projects.length > 0 && projects.map((project) => (<ProjectCard {...project} />))}
-      </Container>)}
+        {projects && projects.length > 0 && projects.map((project) => <ProjectCard key={project._id} {...project} />)}
+      </Container>
+    )}
   </>
 );
 
