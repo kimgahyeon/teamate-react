@@ -20,9 +20,10 @@ const LoginContainer = ({ setIsMate, setModalOpen }) => {
       setLoading(true);
       const { data } = await mateAPI.login({ email, password });
       console.log(data);
-      if (data.status){
-        alert(data.mate.name)
-        setModalOpen(false)
+      if (data.status) {
+        alert(data.mate.name);
+        // localstorage
+        setModalOpen(false);
       }
     } catch {
       setError("로그인 정보가 일치하지 않습니다.");

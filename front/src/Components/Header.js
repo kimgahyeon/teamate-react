@@ -101,7 +101,7 @@ var tabs = {
   "/mate/test": <p>메이트 상세보기</p>,
   "/project": <p>프로젝트</p>,
 };
-
+  
 export default withRouter(({ location: { pathname } }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [isMate, setIsMate] = useState(true);

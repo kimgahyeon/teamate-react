@@ -2,35 +2,51 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Helmet from "react-helmet";
-import ProgressIndicator from "Components/ProgressIndicator";
 
 const Button = styled.button`
   display: block;
   background-color: #565656;
   color: #ffffff;
   height: 58px;
-  border-radius: 4px; 
+  border-radius: 4px;
   margin-top: 7px;
   font-size: 15px;
   line-height: 58px;
-  width: 100%;  
+  width: 100%;
   outline: none;
   cursor: pointer;
-  border: 0;  
+  border: 0;
 
   &:hover {
     background-color: #218c74;
-    transition-duration: 0.3s
+    transition-duration: 0.3s;
   }
 `;
 
 const Error = styled.div`
-  margin-top: 8px;
-  margin-bottom: 40px;
-  font-size: 14px;
-  color: #E83442;
+  display: flex;
+  justify-content: center;
+  color: #e83442;
+  font-size: 1rem;
 `;
 
+const SwitchContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  color: #a7a7a7;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+`;
+
+const Switch = styled.div`
+  margin-left: 1rem;
+
+  &:hover {
+    font-weight: bold;
+  }
+
+  transition-duration: 0.3s;
+`;
 
 const LoginPresenter = ({
   loading,
@@ -44,7 +60,7 @@ const LoginPresenter = ({
     <Helmet>
       <title>Login | Teamate</title>
     </Helmet>
-    <div className="error_sign"> {error} </div>
+    <Error> {error} </Error>
     <form onSubmit={handleSubmit}>
       <input
         className="inputMateInfo"
@@ -61,24 +77,20 @@ const LoginPresenter = ({
         placeholder="비밀번호"
         value={values.password}
       ></input>{" "}
-      <div className="checkMate">
+      <SwitchContainer>
         아직 회원이 아니신가요?
-        <div
-          className="checkMateLink"
+        <Switch
           onClick={() => {
             setIsMate(false);
           }}
         >
           {" "}
           회원가입{" "}
-        </div>
-      </div>
+        </Switch>
+      </SwitchContainer>
       <br />
       <br />
-      <Button type="submit">
-        {" "}
-        로그인하기{" "}
-      </Button>
+      <Button type="submit"> 로그인하기 </Button>
     </form>
   </>
 );

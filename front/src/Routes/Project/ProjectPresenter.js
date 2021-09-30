@@ -15,19 +15,15 @@ const Container = styled.div`
   text-align: center;
 `;
 
-const ProjectPresenter = ({ setStatus, loading, error, projects }) => (
+const ProjectPresenter = ({ loading, error, projects }) => (
   <>
     <Helmet>
       <title>Mates | Teamate</title>
     </Helmet>
-
-    {loading ? (
-      <ProgressIndicator />
-    ) : (
-      <Container>
-        {projects && projects.length > 0 && projects.map((project) => <ProjectCard key={project._id} {...project} />)}
-      </Container>
-    )}
+    <Container>
+      {projects && projects.length > 0 && projects.map((project) => <ProjectCard key={project._id} {...project} />)}
+    </Container>
+    {loading ? <ProgressIndicator /> : null}
   </>
 );
 

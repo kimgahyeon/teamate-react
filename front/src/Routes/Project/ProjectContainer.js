@@ -13,24 +13,8 @@ const ProjectContainer = () => {
   const [left, setLeft] = useState(true);
 
   const getProjectsData = async () => {
-    setLoading(true);
     try {
-      const {
-        data: { projects: projectsData },
-      } = await projectAPI.getProjectsByStatusAndRange(status, page * PAGE_SIZE, PAGE_SIZE);
-      if (projectsData.length < PAGE_SIZE) setLeft(false);
-      setPage(page + 1);
-      setProjects(projectsData);
-    } catch {
-      setError("Projects를 찾을 수 없습니다.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const getMoreProjectsData = async () => {
-    setLoading(true);
-    try {
+      setLoading(true);
       const {
         data: { projects: projectsData },
       } = await projectAPI.getProjectsByStatusAndRange(status, page * PAGE_SIZE, PAGE_SIZE);
@@ -49,9 +33,7 @@ const ProjectContainer = () => {
     const { scrollHeight, scrollTop, clientHeight } = d;
 
     if (scrollTop + clientHeight >= scrollHeight && left) {
-      const currentScrollTop = scrollTop;
-      await getMoreProjectsData();
-      window.scrollTo({ top: currentScrollTop, behavior: "auto" });
+      await getProjectsData();
     }
   };
 

@@ -3,6 +3,14 @@ const router = express.Router();
 
 const Mate = require("../model/mate");
 
+const { FileSystemWallet, Gateway } = require("fabric-network");
+const fs = require("fs");
+const path = require("path");
+
+const ccpPath = path.resolve(__dirname, "..", "..", "network", "connection.json");
+const ccpJSON = fs.readFileSync(ccpPath, "utf8");
+const ccp = JSON.parse(ccpJSON);
+
 // R-0201: setMate
 router.post("/", async (req, res) => {
   try {

@@ -20,6 +20,8 @@ const JoinContainer = ({ setIsMate }) => {
       password === confirmPassword
     ) {
       join({ email, password, name });
+    } else {
+      return () => setError("입력 값이 잘못되었습니다.");
     }
   };
 

@@ -4,12 +4,12 @@ const app = express();
 const path = require("path");
 
 // 서버속성
-const PORT = 8080;
+const PORT = 4000;
 const HOST = "0.0.0.0";
 
 const cors = require("cors");
 const corsOption = {
-  origin: ["http://dmc.ajou.ac.kr:3000", "http://localhost:3000"],
+  origin: ["http://dmc.ajou.ac.kr:3500", "http://localhost:3500"],
   credentials: true,
 };
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const SERVER_URL = "http://dmc.ajou.ac.kr";
-const SERVER_PORT = "8080";
+const SERVER_PORT = "4000";
 
 const api = axios.create({
   baseURL: `${SERVER_URL}:${SERVER_PORT}/`,
@@ -10,7 +10,8 @@ const api = axios.create({
 
 export const mateAPI = {
   getAllMates: () => api.get("mate"),
-  getMates: (limit) => api.get(`mate/limit/${limit}`),
+  getMatesByRange: (offset, limit) => api.get(`mate/offset/${offset}/limit/${limit}`),
+  getMatesByRoleAndRange: (role, offset, limit) => api.get(`mate/role/${role}/offset/${offset}/limit/${limit}`),
   getMateByID: (id) => api.get(`mate/${id}`),
   getMateByEmail: (email) => api.get(`mate/email/${email}`),
   updateMate: (id, mate) => api.put(`mate/${id}`, { mate }),
